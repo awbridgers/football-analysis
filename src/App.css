@@ -1,28 +1,58 @@
-.App {
-  text-align: center;
+html{
+  height:100%
+}
+body{
+  height:100;
+  background: black;
+
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
+.liveInfo{
+  height: 50vh;
+  width: 50vw;
+  border: 2px solid white;
   color: white;
 }
 
-.App-title {
-  font-size: 1.5em;
+.score{
+  font-size: 20px;
+  text-align: center;
 }
 
-.App-intro {
-  font-size: large;
+.wakeScore, .oppScore{
+  display: inline-block;
+  padding: 20px;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.wakeScore p, .oppScore p{
+  margin-top: 10px;
+}
+.driveInfo {
+  text-align: center;
+}
+.driveInfo div{
+display: inline-block;
+font-size: 18px;
+padding: 20px;
+}
+.driveStart{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #083CAD;
+  min-width: 400px;
+  text-align: center;
+  height: 200px;
+  font-size: 18px;
+}
+.startDrive{
+  text-align: center;
+  padding-top: 20px;
+}
+.button{
+  height:35px;
+  width: 105px;
+  border-radius: 8px;
+  font-size: 16px;
 }
