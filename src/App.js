@@ -13,11 +13,26 @@ class App extends Component {
       oppScore: 0,
       quarter: 1,
       opponent: "Opponent",
-      ballOn: 50,
+      ballOn: 0,
       enterDriveStart: false,
       startLine: "",
-      startTerritory: 'none'
+      startTerritory: 'none',
+      fieldPosition: [],
+      driveStart: 0,
+
     }
+  }
+  averageFieldPos = () => {
+    const posArray = this.state.fieldPosition;
+    let yardsToGo = 0;
+    posArray.forEach((drive)=>{
+      yardsToGo += drive;
+    });
+    const avg = yardsToGo / posArray.length;
+    if(avg === 50){
+      return '50'
+    }
+    return (avg > 50) ? `own ${100-avg}` : `opponent's ${avg}`;
   }
   startDrive = () => {
     this.setState({enterDriveStart: true})
@@ -43,10 +58,14 @@ class App extends Component {
       alert('Please enter a valid yard line');
     }
     else{
+      const start = parseInt(this.state.startLine,10);
+      const yardsToGo = (this.state.startTerritory === 'own') ? 100-start : start;
       this.setState({
         enterDriveStart: false,
-        ballOn: parseInt(this.state.startLine,10),
+        ballOn: start,
+        driveStart: start,
         down: 1,
+        fieldPosition: [...this.state.fieldPosition,yardsToGo]
       });
     }
   }
@@ -68,6 +87,7 @@ class App extends Component {
               {this.state.down === 3 && `${this.state.down}rd and ${this.state.distance}`}
             </div>
             <div>Ball on: {this.state.ballOn}</div>
+            <div>Drive Started: {this.state.driveStart}</div>
           </div>
           <div className = 'startDrive'><button className = 'button' onClick = {this.startDrive}>New Drive</button></div>
         </div>
