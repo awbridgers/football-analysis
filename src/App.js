@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import DriveStart from './driveStart.jsx'
+import AddPlay from './addPlay.jsx'
+
 
 
 class App extends Component {
@@ -19,6 +21,7 @@ class App extends Component {
       startTerritory: 'none',
       fieldPosition: [],
       driveStart: 0,
+      playType: null
 
     }
   }
@@ -69,6 +72,15 @@ class App extends Component {
       });
     }
   }
+  playType = (e) => {
+    this.setState({playType: e.target.id})
+  }
+  stylePlayType = (type) => {
+    if(this.state.playType === null){
+      return {}
+    }
+    return (this.state.playType === type) ? {background: "#CFB53B"} : {background: '#504A4B'}
+  }
   render() {
     const {enterDriveStart} = this.state;
     return (
@@ -90,6 +102,9 @@ class App extends Component {
             <div>Drive Started: {this.state.driveStart}</div>
           </div>
           <div className = 'startDrive'><button className = 'button' onClick = {this.startDrive}>New Drive</button></div>
+        </div>
+        <div className = 'addPlays'>
+          <AddPlay style = {this.stylePlayType} onClick = {this.playType}/>
         </div>
       </div>
     );
