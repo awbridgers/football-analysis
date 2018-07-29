@@ -12,9 +12,9 @@ const AddPlay = (props) => (
     </div>
     <div className = 'passButtons'>
       <p><u>Pass</u></p>
-      <p><button style = {props.style('0-5')} onClick = {props.onClick} id= '0-5'>0-5</button></p>
-      <p><button style = {props.style('5-15')} onClick = {props.onClick} id ='5-15'>5-15</button></p>
-      <p><button style = {props.style('15+')} onClick = {props.onClick} id= '15+'>15+</button></p>
+      <p><button style = {props.style('pass_0-5')} onClick = {props.onClick} id= 'pass_0-5'>0-5</button></p>
+      <p><button style = {props.style('pass_5-15')} onClick = {props.onClick} id ='pass_5-15'>5-15</button></p>
+      <p><button style = {props.style('pass_15+')} onClick = {props.onClick} id= 'pass_15+'>15+</button></p>
     </div>
   </div>
 )

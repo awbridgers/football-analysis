@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import DriveStart from './driveStart.jsx'
 import AddPlay from './addPlay.jsx'
+import PlayInfo from './playInfo.jsx'
 
 
 
@@ -21,7 +22,11 @@ class App extends Component {
       startTerritory: 'none',
       fieldPosition: [],
       driveStart: 0,
-      playType: null
+      playType: 'null',
+      qb: 'QB',
+      hb: 'HB',
+      wr: ['WR1', 'WR2', 'WR3'],
+      ballCarrier: ''
 
     }
   }
@@ -75,11 +80,20 @@ class App extends Component {
   playType = (e) => {
     this.setState({playType: e.target.id})
   }
+  choosePlayer = (e) => {
+    this.setState({ballCarrier: e.target.id})
+  }
   stylePlayType = (type) => {
-    if(this.state.playType === null){
+    if(this.state.playType === 'null'){
       return {}
     }
     return (this.state.playType === type) ? {background: "#CFB53B"} : {background: '#504A4B'}
+  }
+  stylePlayer = (player) => {
+    if(this.state.ballCarrier === ""){
+      return;
+    }
+    return (this.state.ballCarrier === player) ? {background: "#CFB53B"} : {background: '#504A4B'}
   }
   render() {
     const {enterDriveStart} = this.state;
@@ -104,7 +118,9 @@ class App extends Component {
           <div className = 'startDrive'><button className = 'button' onClick = {this.startDrive}>New Drive</button></div>
         </div>
         <div className = 'addPlays'>
-          <AddPlay style = {this.stylePlayType} onClick = {this.playType}/>
+          <div className = 'runOrPass'><AddPlay style = {this.stylePlayType} onClick = {this.playType}/></div>
+          <div className = 'playInfo'><PlayInfo qb = {this.state.qb} hb = {this.state.hb} wr = {this.state.wr}
+            playType = {this.state.playType} stylePlayer = {this.stylePlayer} onClick = {this.choosePlayer} /></div>
         </div>
       </div>
     );
