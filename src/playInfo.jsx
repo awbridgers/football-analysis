@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
 
 
@@ -15,9 +15,9 @@ const PlayInfo = (props) => (
     {props.playType.includes('pass') &&
       <div>
         <p><u>Target</u></p>
-        {props.wr.map((player) => {
+        {props.wr.map((player,i) => {
           return(
-            <p><button onClick = {props.onClick} id = {player} style = {props.stylePlayer(player)}>{player}</button></p>
+            <p key = {i}><button onClick = {props.onClick} id = {player} style = {props.stylePlayer(player)}>{player}</button></p>
           )
         })}
 

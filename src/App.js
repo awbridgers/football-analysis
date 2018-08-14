@@ -3,6 +3,7 @@ import './App.css';
 import DriveStart from './driveStart.jsx'
 import AddPlay from './addPlay.jsx'
 import PlayInfo from './playInfo.jsx'
+import PlayResult from './playResult.jsx'
 
 
 
@@ -26,7 +27,10 @@ class App extends Component {
       qb: 'QB',
       hb: 'HB',
       wr: ['WR1', 'WR2', 'WR3'],
-      ballCarrier: ''
+      ballCarrier: '',
+      touchdown: false,
+      fumble: false,
+      completePass: false
 
     }
   }
@@ -95,6 +99,16 @@ class App extends Component {
     }
     return (this.state.ballCarrier === player) ? {background: "#CFB53B"} : {background: '#504A4B'}
   }
+  checkTD = () => {
+    this.setState({touchdown: !this.state.touchdown});
+  }
+  checkFumble = () => {
+    this.setState({fumble: !this.state.fumble});
+  }
+  checkCompletion = (e) =>{
+    const completion = (e.target.id === 'complete') ? true : false;
+    this.setState({completePass : completion})
+  }
   render() {
     const {enterDriveStart} = this.state;
     return (
@@ -120,7 +134,11 @@ class App extends Component {
         <div className = 'addPlays'>
           <div className = 'runOrPass'><AddPlay style = {this.stylePlayType} onClick = {this.playType}/></div>
           <div className = 'playInfo'><PlayInfo qb = {this.state.qb} hb = {this.state.hb} wr = {this.state.wr}
-            playType = {this.state.playType} stylePlayer = {this.stylePlayer} onClick = {this.choosePlayer} /></div>
+            playType = {this.state.playType} stylePlayer = {this.stylePlayer} onClick = {this.choosePlayer} />
+          </div>
+          <div className = 'results'><PlayResult playType = {this.state.playType} TD = {this.state.touchdown}
+            checkTD = {this.checkTD} fumble = {this.state.fumble} checkFumble = {this.checkFumble}
+            complete = {this.state.completePass} changeRadio = {this.checkCompletion}/></div>
         </div>
       </div>
     );
