@@ -12,6 +12,7 @@ const DriveStart = (props) => (
       <input type='radio' checked = {props.territory === 'opponent'} onChange = {props.changeRadio}
         name = 'territory' value = 'opponent' id ='opponent'/><label>Opponent</label>
       <p><button className = 'submit' type = 'submit' onClick = {props.submit}>Submit</button></p>
+      <p><button className = 'submit' type = 'submit' onClick = {props.cancel}>Cancel</button></p>
     </div>
   </div>
 );

@@ -7,21 +7,22 @@ const PlayInfo = (props) => (
     {props.playType.includes('run') &&
     <div>
       <p><u>Ball Carrier</u></p>
-      <p><button onClick = {props.onClick} id = {props.qb}style = {props.stylePlayer(props.qb)}>{props.qb}</button></p>
-      <p><button onClick = {props.onClick}  id ={props.hb}style = {props.stylePlayer(props.hb)}>{props.hb}</button></p>
+      <p><button onClick = {props.onClick} id = {props.qb.name}style = {props.stylePlayer(props.qb.name)}>{props.qb.name}</button></p>
+      <p><button onClick = {props.onClick}  id ={props.hb.name}style = {props.stylePlayer(props.hb.name)}>{props.hb.name}</button></p>
       <p><button onClick = {props.onClick}  id = 'wr' style = {props.stylePlayer('wr')}>WR</button></p>
     </div>
     }
     {props.playType.includes('pass') &&
       <div>
         <p><u>Target</u></p>
-        {props.wr.map((player,i) => {
-          return(
-            <p key = {i}><button onClick = {props.onClick} id = {player} style = {props.stylePlayer(player)}>{player}</button></p>
-          )
-        })}
-
-      </div>}
+        <div className = 'flexbox'>
+          {props.wr.map((player,i) => {
+            return(
+              <div key = {i}><button onClick = {props.onClick} id = {player.name} style = {props.stylePlayer(player.name)}>{player.name}</button></div>
+            )
+          })}
+        </div>
+    </div>}
   </div>
 )
 
