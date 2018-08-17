@@ -1,28 +1,187 @@
-.App {
+html{
+  height:100%
+}
+body{
+  height:100;
+  background: black;
+  border-collapse: collapse;
+
+
+}
+
+.liveInfo{
+  height: 50vh;
+  width: 50vw;
+  min-width: 500px;
+  border-top: 2px solid white;
+  border-right: 1px solid white;
+  border-left: 2px solid white;
+  border-bottom: 1px solid white;
+  color: white;
+  box-sizing: border-box;
+}
+
+.score{
+  font-size: 20px;
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.wakeScore, .oppScore{
+  display: inline-block;
+  padding: 20px;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
+.wakeScore p, .oppScore p{
+  margin-top: 10px;
+}
+.driveInfo {
+  text-align: center;
+}
+.driveInfo div{
+display: inline-block;
+font-size: 18px;
+padding: 20px;
+}
+.driveStart{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #083CAD;
+  min-width: 400px;
+  text-align: center;
+  height: 200px;
+  font-size: 18px;
+}
+.startDrive{
+  text-align: center;
+  padding-top: 20px;
+}
+.submit{
+  height:35px;
+  width: 105px;
+  border-radius: 8px;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.button{
+  height:35px;
+  width: 105px;
+  border-radius: 8px;
+  font-size: 16px;
+}
+.runButtons{
+  display: inline-block;
+  padding: 0px 5px 0px 5px;
+  text-align: center;
+}
+.passButtons{
+  display: inline-block;
+  padding: 0px 5px 0px 5px;
+  text-align: center;
+}
+.runButtons button, .passButtons button{
+  height:35px;
+  width: 105px;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.addPlays{
+  color: white;
+  font-size: 20px;
+  height: 50vh;
+  width:50vw;
+  min-width: 500px;
+  border-bottom: 2px solid white;
+  border-top: 1px solid white;
+  border-left:2px solid white;
+  border-right: 1px solid white;
+  box-sizing: border-box;
+
+}
+.playInfo{
+  display: inline-block;
+  vertical-align: top;
+  padding: 0px 10px 0px 10px;
+
+}
+.runOrPass{
+  display: inline-block;
+  vertical-align: top;
+}
+.results{
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  padding: 0px 10px 0px 10px;
+  position: relative;
+  height: 100%;
+}
+.details{
+  text-align: center;
+}
+.details button{
+  height:45px;
+  width: 105px;
+  border-radius: 8px;
+  font-size: 14px;
+
+}
+.addPlayButton{
+ text-align: center;
+}
+.playButton{
+  height:55px;
+  width: 105px;
+  border-radius: 8px;
+  font-size: 16px;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.flexbox{
+  display: flex;
+  width: 200px;
+  justify-content: center;
+  flex-wrap: wrap;
+  height: 10%;
+}
+.flexbox button{
+  font-size: 12px;
+  font-weight: bold;
+  width: 90px;
+  height: 35px;
+  text-align: center;
+  margin: 2px 2px 2px 2px;
+}
+
+.playbyplay{
+  height: 100vh;
+  position: absolute;
+  top: 0px;
+  left: 50vw;
+  border-top: 2px solid white;
+  border-left: 1px solid white;
+  border-right: 2px solid white;
+  border-bottom: 2px solid white;
+  width: 50vw;
+  box-sizing: border-box;
   color: white;
 }
 
-.App-title {
-  font-size: 1.5em;
-}
+.headers th{
+  font-size: 12px;
+  text-align: center;
 
-.App-intro {
-  font-size: large;
 }
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.headers{
+  width: 100%;
+  border: 1px solid white;
+}
+.playList{
+  width: 100%;
+  text-align: center;
 }
