@@ -4,6 +4,15 @@ import DriveStart from './driveStart.jsx'
 import AddPlay from './addPlay.jsx'
 import PlayInfo from './playInfo.jsx'
 import PlayResult from './playResult.jsx'
+import PlayByPlay from './playByPlay.jsx'
+
+class drive {
+  constructor(startLine, side){
+    this.startLine = startLine
+    this.side = side;
+    this.plays = []
+  }
+}
 
 class player {
   constructor(name,position){
@@ -84,7 +93,7 @@ class App extends Component {
       wakeScore: 0,
       oppScore: 0,
       quarter: 1,
-      opponent: "Opponent",
+      opponent: "Opp",
       ballOn: 0,
       enterDriveStart: false,
       startLine: "",
@@ -102,7 +111,8 @@ class App extends Component {
       completePass: false,
       drop: false,
       yardsGained: "",
-      yardsAfterCatch: ""
+      yardsAfterCatch: "",
+      playArray: []
     }
 
   }
@@ -149,7 +159,7 @@ class App extends Component {
       const yardsToGo = (this.state.startTerritory === 'own') ? 100-start : start;
       this.setState({
         enterDriveStart: false,
-        ballOn: start,
+        ballOn: yardsToGo,
         driveStart: start,
         down: 1,
         fieldPosition: [...this.state.fieldPosition,yardsToGo]
@@ -222,6 +232,10 @@ class App extends Component {
       interception: this.state.interception,
       completePass: this.state.completePass
     }
+    let newDown = (parseInt(this.state.yardsGained,10) >= this.state.distance) ? 1 : this.state.down + 1;
+    let newDistance = (parseInt(this.state.yardsGained,10) >= this.state.distance) ? 10 : this.state.distance-this.state.yardsGained;
+    this.setState({playArray: [...this.state.playArray, currentPlay], down: newDown,
+      distance: newDistance, ballOn: this.state.ballOn - parseInt(this.state.yardsGained,10)});
 
 
 
@@ -230,9 +244,6 @@ class App extends Component {
     const {enterDriveStart} = this.state;
     return (
       <div>
-        {enterDriveStart && <DriveStart onChange = {this.enterYardLine} yardLine = {this.state.startLine}
-        changeRadio = {this.changeTerritory} submit = {this.submitDriveStart} territory = {this.state.startTerritory}
-        cancel = {this.cancelDrive}/>}
         <div className = 'liveInfo'>
           <div className = 'score'>
             <div className = 'wakeScore'><b>Wake Forest</b><p>{this.state.wakeScore}</p></div>
@@ -244,12 +255,13 @@ class App extends Component {
               {this.state.down %2 ===0 && `${this.state.down}nd and ${this.state.distance}`}
               {this.state.down === 3 && `${this.state.down}rd and ${this.state.distance}`}
             </div>
-            <div>Ball on: {this.state.ballOn}</div>
+            <div>Ball on: {this.state.ballOn >= 50 && `Own ${100 -this.state.ballOn}`}
+              {this.state.ballOn < 50 && `${this.state.opponent} ${this.state.ballOn}`}</div>
             <div>Drive Started: {this.state.driveStart}</div>
           </div>
           <div className = 'startDrive'><button className = 'button' onClick = {this.startDrive}>New Drive</button></div>
         </div>
-        <div className = "playbyplay">Hello</div>
+        <div className = "playbyplay"><PlayByPlay playArray = {this.state.playArray} opponent = {this.state.opponent} /></div>
         <div className = 'addPlays'>
           <div className = 'runOrPass'><AddPlay style = {this.stylePlayType} onClick = {this.playType}/></div>
           <div className = 'playInfo'><PlayInfo qb = {this.state.qb} hb = {this.state.hbArray[0]} wr = {this.state.wrArray}
@@ -263,6 +275,9 @@ class App extends Component {
             changeYAC = {this.onYACChange} addPlay = {this.addPlay}/>
           </div>
         </div>
+        {enterDriveStart && <DriveStart onChange = {this.enterYardLine} yardLine = {this.state.startLine}
+        changeRadio = {this.changeTerritory} submit = {this.submitDriveStart} territory = {this.state.startTerritory}
+        cancel = {this.cancelDrive}/>}
       </div>
     );
   }
