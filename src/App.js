@@ -84,10 +84,11 @@ class App extends Component {
 
 
     this.state = {
-      qbArray: [this.kHinton, this.jNewman, this.sHart],
+      qbArray: [this.kHinton, this.jNewman, this.sHartman],
       hbArray: [this.cCarney, this.mColburn, this.cBeal, this.tNdlovu, this.dDelaney],
       wrArray: [this.aBachman, this.gDortch,this.sWashington, this.sSurratt, this.jSriraman,
-        this.sClaude, this.jFreudenthal, this.jLubrano, this.bChapman, ],
+        this.sClaude, this.jFreudenthal, this.jLubrano, this.bChapman],
+      arrayOfAllPlayers: [],
       down: 1,
       distance: 10,
       wakeScore: 0,
@@ -114,6 +115,9 @@ class App extends Component {
       yardsAfterCatch: "",
       playArray: []
     }
+  }
+  componentDidMount(){
+    this.setState({arrayOfAllPlayers: [...this.state.qbArray, ...this.state.hbArray, ...this.state.wrArray]});
 
   }
   averageFieldPos = () => {
@@ -167,11 +171,13 @@ class App extends Component {
     }
   }
   playType = (e) => {
-    if(e.target.id === this.state.playType){
-      this.setState({playType: 'null', showResults: false, ballCarrier: ''})
-    }
-    else{
-      this.setState({playType: e.target.id, showResults: false, ballCarrier: ''})
+    if(this.state.startLine !== ""){
+      if(e.target.id === this.state.playType){
+        this.setState({playType: 'null', showResults: false, ballCarrier: ''})
+      }
+      else{
+        this.setState({playType: e.target.id, showResults: false, ballCarrier: ''})
+      }
     }
   }
   choosePlayer = (e) => {
@@ -217,26 +223,77 @@ class App extends Component {
     }
   }
   addPlay = () => {
-    let currentPlay = {
-      down: this.state.down,
-      distance: this.state.distance,
-      wakeScore: this.state.wakeScore,
-      oppScore: this.state.oppScore,
-      ballOn: this.state.ballOn,
-      playType: this.state.playType,
-      ballCarrier: this.state.ballCarrier,
-      yardsGained: this.state.yardsGained,
-      yac: this.state.yardsAfterCatch,
-      fumble: this.state.fumble,
-      touchdown: this.state.touchdown,
-      interception: this.state.interception,
-      completePass: this.state.completePass
+    if(this.state.yardsGained === '' && this.state.completePass){
+      alert('Please add the the number of yards gained.')
     }
+    else{
+      let currentPlay = {
+        down: this.state.down,
+        distance: this.state.distance,
+        wakeScore: this.state.wakeScore,
+        oppScore: this.state.oppScore,
+        ballOn: this.state.ballOn,
+        playType: this.state.playType,
+        ballCarrier: this.state.ballCarrier,
+        yardsGained: parseInt(this.state.yardsGained,10),
+        yac: parseInt(this.state.yardsAfterCatch,10),
+        fumble: this.state.fumble,
+        touchdown: this.state.touchdown,
+        interception: this.state.interception,
+        completePass: this.state.completePass,
+        qb: this.state.qb,
+        hb: this.state.hb
+      }
+    //if the play is a pass
+    if(this.state.playType.includes('pass')){
+      //find the target and the qb
+      let target = this.state.arrayOfAllPlayers.find((player)=> player.name === this.state.ballCarrier);
+      let qb = this.state.qb
+      if(this.state.playType === 'pass_0-5'){qb.passAttempts0++;}
+      else if(this.state.playType === 'pass_5-15'){qb.passAttempts5 ++;}
+      else if(this.state.playType === 'pass_15+'){qb.passAttempts15 ++;}
+      target.targeted ++;
+      //if it is a complete pass
+      if(this.state.completePass){
+        if(this.state.playType === 'pass_0-5'){qb.completions0++;}
+        else if(this.state.playType === 'pass_5-15'){qb.completions5 ++;}
+        else if(this.state.playType === 'pass_15+'){qb.completions15 ++;}
+        target.receptions ++;
+        target.receivingYards += parseInt(this.state.yardsGained,10)
+        if(this.state.yardsAfterCatch !==''){
+          target.yardsAfterCatch += parseInt(this.state.yardsAfterCatch,10)
+        }
+        if(this.state.touchdown){
+          target.receivingTDs ++;
+        }
+        if(this.state.fumble){
+          target.fumbles++;
+        }
+      }
+      if(this.state.drop){
+        target.drop++
+      }
+      //console.log(qb,target)
+    }
+    else if(this.state.playType.includes('run')){
+      let ballCarrier = this.state.arrayOfAllPlayers.find(player => player.name === this.state.ballCarrier);
+      ballCarrier.rushAttempts++;
+      ballCarrier.rushYards += parseInt(this.state.yardsGained,10);
+      if(this.state.fumble){
+        ballCarrier.fumbles++;
+      }
+      if(this.state.touchdown){
+        ballCarrier.rushingTDs++;
+      }
+    }
+
+
+
     let newDown = (parseInt(this.state.yardsGained,10) >= this.state.distance) ? 1 : this.state.down + 1;
     let newDistance = (parseInt(this.state.yardsGained,10) >= this.state.distance) ? 10 : this.state.distance-this.state.yardsGained;
     this.setState({playArray: [...this.state.playArray, currentPlay], down: newDown,
       distance: newDistance, ballOn: this.state.ballOn - parseInt(this.state.yardsGained,10)});
-
+    }
 
 
   }

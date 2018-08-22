@@ -27,6 +27,7 @@ const PlayResults = (props) => (
                 <p><label>Yards: </label><input size = '1' type = 'text' value = {props.yardsGained} onChange = {props.changeInput}></input></p>
                 <p><label>YAC: </label><input size = '1' type = 'text' value = {props.yac} onChange = {props.changeYAC}></input></p>
                 <p><input type = 'checkbox' checked = {props.TD} onChange = {props.checkTD}></input><label>  Touchdown</label></p>
+                <p style ={{marginTop: '-8px'}}><input type = 'checkbox' checked = {props.fumble} onChange = {props.checkFumble}></input><label>  Fumble</label></p>
               </div>
             }
             {!props.complete &&
