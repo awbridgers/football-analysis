@@ -5,6 +5,8 @@ import AddPlay from './addPlay.jsx'
 import PlayInfo from './playInfo.jsx'
 import PlayResult from './playResult.jsx'
 import PlayByPlay from './playByPlay.jsx'
+import PlayerStats from './playerStats.jsx'
+import ChangePlayer from './changePlayer.jsx'
 
 class drive {
   constructor(startLine, side){
@@ -31,6 +33,7 @@ class player {
       this.rushYards = 0;
       this.fumbles = 0;
       this.rushingTDs = 0;
+      this.passingYards = 0;
     }
     else{
       this.rushAttempts = 0;
@@ -89,25 +92,30 @@ class App extends Component {
       wrArray: [this.aBachman, this.gDortch,this.sWashington, this.sSurratt, this.jSriraman,
         this.sClaude, this.jFreudenthal, this.jLubrano, this.bChapman],
       arrayOfAllPlayers: [],
-      down: 1,
-      distance: 10,
+      qb: this.kHinton,
+      hb: this.mColburn,
+      fieldPosition: [],
+      activeDrive: false,
+      enterDriveStart: false,
+      changeScore: false,
+      changePlayer: false,
+      changeInfo: false,
       wakeScore: 0,
       oppScore: 0,
       quarter: 1,
       opponent: "Opp",
+      down: 1,
+      distance: 10,
       ballOn: 0,
-      enterDriveStart: false,
       startLine: "",
       startTerritory: 'none',
-      fieldPosition: [],
       driveStart: 0,
       playType: 'null',
       showResults: false,
-      qb: this.kHinton,
-      hb: this.mColburn,
       ballCarrier: '',
       touchdown: false,
       fumble: false,
+      sack: false,
       interception: false,
       completePass: false,
       drop: false,
@@ -134,6 +142,31 @@ class App extends Component {
   }
   startDrive = () => {
     this.setState({enterDriveStart: true})
+  }
+  endDrive = () => {
+    if(this.state.activeDrive){
+      this.setState({
+      activeDrive: false, down: 1,
+      distance: 10,
+      ballOn: 0,
+      startLine: "",
+      startTerritory: 'none',
+      driveStart: 0,
+      playType: 'null',
+      showResults: false,
+      ballCarrier: '',
+      touchdown: false,
+      fumble: false,
+      sack: false,
+      interception: false,
+      completePass: false,
+      drop: false,
+      yardsGained: "",
+      yardsAfterCatch: ""})
+    }
+    else{
+      console.log("No drive is active")
+    }
   }
   cancelDrive = () => {
     this.setState({enterDriveStart: false})
@@ -163,6 +196,7 @@ class App extends Component {
       const yardsToGo = (this.state.startTerritory === 'own') ? 100-start : start;
       this.setState({
         enterDriveStart: false,
+        activeDrive: true,
         ballOn: yardsToGo,
         driveStart: start,
         down: 1,
@@ -171,14 +205,17 @@ class App extends Component {
     }
   }
   playType = (e) => {
-    if(this.state.startLine !== ""){
+    // if(this.state.startLine !== ""){
       if(e.target.id === this.state.playType){
         this.setState({playType: 'null', showResults: false, ballCarrier: ''})
+      }
+      else if(e.target.id === 'sack'){
+        this.setState({playType: e.target.id, showResults: true, ballCarrier: this.state.qb, sack: true})
       }
       else{
         this.setState({playType: e.target.id, showResults: false, ballCarrier: ''})
       }
-    }
+    // }
   }
   choosePlayer = (e) => {
     this.setState({ballCarrier: e.target.id, showResults: true})
@@ -195,6 +232,17 @@ class App extends Component {
     }
 
     return (this.state.ballCarrier === player) ? {background: "#CFB53B"} : {background: '#504A4B'}
+  }
+  changeQB = (e) => {
+    let newQB = this.state.qbArray.find((qb) => qb.name === e.target.id);
+    this.setState({qb: newQB})
+  }
+  changeHB = (e) => {
+    let newHB = this.state.hbArray.find((hb)=> hb.name === e.target.id)
+    this.setState({hb: newHB})
+  }
+  acceptPlayerChange = () => {
+    this.setState({changePlayer: false})
   }
   checkTD = () => {
     this.setState({touchdown: !this.state.touchdown});
@@ -241,6 +289,7 @@ class App extends Component {
         touchdown: this.state.touchdown,
         interception: this.state.interception,
         completePass: this.state.completePass,
+        sacked: this.state.sack,
         qb: this.state.qb,
         hb: this.state.hb
       }
@@ -260,6 +309,7 @@ class App extends Component {
         else if(this.state.playType === 'pass_15+'){qb.completions15 ++;}
         target.receptions ++;
         target.receivingYards += parseInt(this.state.yardsGained,10)
+        qb.passingYards += parseInt(this.state.yardsGained,10)
         if(this.state.yardsAfterCatch !==''){
           target.yardsAfterCatch += parseInt(this.state.yardsAfterCatch,10)
         }
@@ -286,6 +336,12 @@ class App extends Component {
         ballCarrier.rushingTDs++;
       }
     }
+    else if(this.state.playType === 'sack'){
+      let qb = this.state.qb;
+      qb.sacked ++;
+      qb.rushAttempts ++;
+      qb.rushYards += parseInt(this.state.yardsGained,10);
+    }
 
 
 
@@ -294,11 +350,12 @@ class App extends Component {
     this.setState({playArray: [...this.state.playArray, currentPlay], down: newDown,
       distance: newDistance, ballOn: this.state.ballOn - parseInt(this.state.yardsGained,10)});
     }
-
-
+  }
+  changePlayer = () =>{
+    this.setState({changePlayer: true})
   }
   render() {
-    const {enterDriveStart} = this.state;
+    const {enterDriveStart, changePlayer} = this.state;
     return (
       <div>
         <div className = 'liveInfo'>
@@ -309,14 +366,24 @@ class App extends Component {
           <div className = 'driveInfo'>
             <div className = 'down'>
               {this.state.down === 1 && `${this.state.down}st and ${this.state.distance}`}
-              {this.state.down %2 ===0 && `${this.state.down}nd and ${this.state.distance}`}
+              {this.state.down === 2 && `${this.state.down}nd and ${this.state.distance}`}
               {this.state.down === 3 && `${this.state.down}rd and ${this.state.distance}`}
+              {this.state.down === 4 && `${this.state.down}th and ${this.state.distance}`}
             </div>
             <div>Ball on: {this.state.ballOn >= 50 && `Own ${100 -this.state.ballOn}`}
               {this.state.ballOn < 50 && `${this.state.opponent} ${this.state.ballOn}`}</div>
             <div>Drive Started: {this.state.driveStart}</div>
           </div>
-          <div className = 'startDrive'><button className = 'button' onClick = {this.startDrive}>New Drive</button></div>
+          <div className = 'startDrive'>
+            <button className = 'button' onClick = {this.startDrive}>New Drive</button>
+            <button className = 'button' onClick = {this.endDrive}>End Drive</button>
+          </div>
+          <div className = 'gameButtons'>
+            <button>Change Score</button>
+            <button>Change Info</button>
+            <button onClick = {this.changePlayer}>Change Players</button>
+
+          </div>
         </div>
         <div className = "playbyplay"><PlayByPlay playArray = {this.state.playArray} opponent = {this.state.opponent} /></div>
         <div className = 'addPlays'>
@@ -331,7 +398,11 @@ class App extends Component {
             changeInput = {this.onYardsGainedChange} yardsGained = {this.state.yardsGained} yac = {this.state.yardsAfterCatch}
             changeYAC = {this.onYACChange} addPlay = {this.addPlay}/>
           </div>
+          <div className = 'playerStats'><PlayerStats players = {this.state.arrayOfAllPlayers}/></div>
         </div>
+        {changePlayer && <ChangePlayer qb = {this.state.qb} hb={this.state.hb} qbArray = {this.state.qbArray}
+          hbArray = {this.state.hbArray} changeQB = {this.changeQB} changeHB = {this.changeHB}
+          accept = {this.acceptPlayerChange}/>}
         {enterDriveStart && <DriveStart onChange = {this.enterYardLine} yardLine = {this.state.startLine}
         changeRadio = {this.changeTerritory} submit = {this.submitDriveStart} territory = {this.state.startTerritory}
         cancel = {this.cancelDrive}/>}

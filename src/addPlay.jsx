@@ -9,12 +9,17 @@ const AddPlay = (props) => (
       <p><button style = {props.style('runLeft')} onClick = {props.onClick} id = 'runLeft'>Run Left</button></p>
       <p><button style = {props.style('runMiddle')} onClick = {props.onClick} id = 'runMiddle'>Run Middle</button></p>
       <p><button style = {props.style('runRight')} onClick = {props.onClick} id = 'runRight'>Run Right</button></p>
+
     </div>
     <div className = 'passButtons'>
       <p><u>Pass</u></p>
       <p><button style = {props.style('pass_0-5')} onClick = {props.onClick} id= 'pass_0-5'>0-5</button></p>
       <p><button style = {props.style('pass_5-15')} onClick = {props.onClick} id ='pass_5-15'>5-15</button></p>
       <p><button style = {props.style('pass_15+')} onClick = {props.onClick} id= 'pass_15+'>15+</button></p>
+
+    </div>
+    <div style = {{textAlign: 'center'}}>
+      <button style = {props.style('sack')} onClick = {props.onClick} id = 'sack'>Sack</button>
     </div>
   </div>
 )

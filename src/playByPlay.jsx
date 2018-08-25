@@ -22,10 +22,13 @@ export default class PlayByPlay extends Component {
                       {play.ballOn >= 50 && `on the Wake ${100 - play.ballOn}`}
                       {play.ballOn < 50 && `on the ${this.props.opponent} ${play.ballOn}`}
                     </td>
-                  {play.playType.includes('run') && <td style = {{width:'70%'}}>{play.ballCarrier} runs for a gain of {play.yardsGained}</td>}
+                  {play.playType.includes('run') && <td style = {{width:'70%'}}>{play.ballCarrier} runs for a
+                  {play.yardsGained > 0 ? ' gain' : ' loss'} of {Math.abs(play.yardsGained)}</td>}
                   {play.playType.includes('pass') && <td style = {{width:'70%'}}>{play.qb.name} pass to {play.ballCarrier} is
                   {play.completePass && ` complete for a gain of ${play.yardsGained}`}
                   {!play.completePass && !play.interception && ` incomplete`}{play.interception && ` intercepted`}</td>}
+                  {play.playType === 'sack' &&
+                    <td style = {{width:  '70%'}}>{play.qb.name} is sacked for a loss of {Math.abs(play.yardsGained)}</td>}
                   </tr>
                 )})
               }
