@@ -23,6 +23,7 @@ const PlayInfo = (props) => (
           })}
         </div>
     </div>}
+    
   </div>
 )
 

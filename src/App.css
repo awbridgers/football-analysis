@@ -63,6 +63,7 @@ padding: 20px;
   border-radius: 8px;
   font-size: 16px;
   margin-top: 20px;
+
 }
 
 .button{
@@ -70,6 +71,8 @@ padding: 20px;
   width: 105px;
   border-radius: 8px;
   font-size: 16px;
+  font-weight: bold;
+  margin: 0px 3px 0px 3px
 }
 .runButtons{
   display: inline-block;
@@ -81,11 +84,23 @@ padding: 20px;
   padding: 0px 5px 0px 5px;
   text-align: center;
 }
+.runButtons p, .passButtons p{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 .runButtons button, .passButtons button{
   height:35px;
   width: 105px;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 15px;
+  font-weight: bold;
+}
+.play button{
+  height:35px;
+  width: 105px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: bold;
 }
 
 .addPlays{
@@ -119,15 +134,24 @@ padding: 20px;
   position: relative;
   height: 100%;
 }
+.results p{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 .details{
   text-align: center;
+
 }
 .details button{
   height:45px;
   width: 105px;
   border-radius: 8px;
   font-size: 14px;
-
+  font-weight: bold;
+}
+.details p{
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .addPlayButton{
  text-align: center;
@@ -159,14 +183,14 @@ padding: 20px;
 }
 
 .playbyplay{
-  height: 100vh;
+  height: 50vh;
   position: absolute;
   top: 0px;
   left: 50vw;
   border-top: 2px solid white;
   border-left: 1px solid white;
   border-right: 2px solid white;
-  border-bottom: 2px solid white;
+  border-bottom: 1px solid white;
   width: 50vw;
   box-sizing: border-box;
   color: white;
@@ -184,4 +208,73 @@ padding: 20px;
 .playList{
   width: 100%;
   text-align: center;
+  vertical-align: top;
+  font-size: 14px;
+  font-weight: bold;
+}
+.playList td{
+  background: blue;
+  vertical-align: top;
+}
+.playerStats{
+  height: 50vh;
+  position: absolute;
+  top: 50vh;
+  left: 50vw;
+  border-top: 1px solid white;
+  border-left: 1px solid white;
+  border-right: 2px solid white;
+  border-bottom: 2px solid white;
+  width: 50vw;
+  box-sizing: border-box;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+}
+.statsTable {
+  text-align: center;
+  width:100%;
+}
+.statsTable td {
+  text-align: left;
+}
+.statsTable th{
+  background:#CFB53B;
+  color: black;
+  font-size: 14px;
+  font-weight: bold;
+}
+.statsName{
+  width:20%;
+}
+.gameButtons{
+ text-align: center;
+ padding-top: 20px;
+}
+.gameButtons button{
+  height:35px;
+  width: 85px;
+  margin: 0px 3px 0px 3px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: bold;
+}
+.changePlayer{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #083CAD;
+  min-width: 600px;
+  text-align: center;
+  height: 400px;
+  font-size: 18px;
+}
+.changePlayer button{
+  height:35px;
+  width: 85px;
+  margin: 0px 3px 0px 3px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: bold;
 }
