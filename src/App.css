@@ -269,12 +269,25 @@ padding: 20px;
   text-align: center;
   height: 400px;
   font-size: 18px;
+  font-weight: bold;
 }
-.changePlayer button{
+.changePlayer button, .changeScore button{
   height:35px;
   width: 85px;
   margin: 0px 3px 0px 3px;
   border-radius: 8px;
   font-size: 12px;
+  font-weight: bold;
+}
+.changeScore{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #083CAD;
+  min-width: 300px;
+  text-align: center;
+  padding-bottom: 25px;
+  font-size: 18px;
   font-weight: bold;
 }

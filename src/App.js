@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
-import DriveStart from './driveStart.jsx'
-import AddPlay from './addPlay.jsx'
-import PlayInfo from './playInfo.jsx'
-import PlayResult from './playResult.jsx'
-import PlayByPlay from './playByPlay.jsx'
-import PlayerStats from './playerStats.jsx'
-import ChangePlayer from './changePlayer.jsx'
+import DriveStart from './driveStart.jsx';
+import AddPlay from './addPlay.jsx';
+import PlayInfo from './playInfo.jsx';
+import PlayResult from './playResult.jsx';
+import PlayByPlay from './playByPlay.jsx';
+import PlayerStats from './playerStats.jsx';
+import ChangePlayer from './changePlayer.jsx';
+import ChangeScore from './changeScore.jsx';
 
 class drive {
   constructor(startLine, side){
@@ -233,6 +234,9 @@ class App extends Component {
 
     return (this.state.ballCarrier === player) ? {background: "#CFB53B"} : {background: '#504A4B'}
   }
+  changePlayer = () =>{
+    this.setState({changePlayer: true})
+  }
   changeQB = (e) => {
     let newQB = this.state.qbArray.find((qb) => qb.name === e.target.id);
     this.setState({qb: newQB})
@@ -243,6 +247,40 @@ class App extends Component {
   }
   acceptPlayerChange = () => {
     this.setState({changePlayer: false})
+  }
+  changeScore = () => {
+    this.setState({changeScore: true})
+  }
+  onChangeScoreClick = (e) => {
+    const id = e.target.id;
+    console.log(id)
+    //if id is for the opponent, change opponent score
+    if(id.includes('opponent')){
+      if(id.includes('pat')){
+        this.setState({oppScore: this.state.oppScore + 1});
+      }
+      else if(id.includes('fg')){
+        this.setState({oppScore: this.state.oppScore + 3});
+      }
+      else if(id.includes('mistake')){
+        this.setState({oppScore: this.state.oppScore - 1});
+      }
+    }
+    //do the same thing but for Wake's score
+    else{
+      if(id.includes('pat')){
+        this.setState({wakeScore: this.state.wakeScore + 1});
+      }
+      else if(id.includes('fg')){
+        this.setState({wakeScore: this.state.wakeScore + 3});
+      }
+      else if(id.includes('mistake')){
+        this.setState({wakeScore: this.state.wakeScore - 1});
+      }
+    }
+  }
+  acceptScoreChange = () => {
+    this.setState({changeScore: false});
   }
   checkTD = () => {
     this.setState({touchdown: !this.state.touchdown});
@@ -351,11 +389,8 @@ class App extends Component {
       distance: newDistance, ballOn: this.state.ballOn - parseInt(this.state.yardsGained,10)});
     }
   }
-  changePlayer = () =>{
-    this.setState({changePlayer: true})
-  }
   render() {
-    const {enterDriveStart, changePlayer} = this.state;
+    const {enterDriveStart, changePlayer, changeScore} = this.state;
     return (
       <div>
         <div className = 'liveInfo'>
@@ -379,7 +414,7 @@ class App extends Component {
             <button className = 'button' onClick = {this.endDrive}>End Drive</button>
           </div>
           <div className = 'gameButtons'>
-            <button>Change Score</button>
+            <button onClick = {this.changeScore}>Change Score</button>
             <button>Change Info</button>
             <button onClick = {this.changePlayer}>Change Players</button>
 
@@ -403,6 +438,8 @@ class App extends Component {
         {changePlayer && <ChangePlayer qb = {this.state.qb} hb={this.state.hb} qbArray = {this.state.qbArray}
           hbArray = {this.state.hbArray} changeQB = {this.changeQB} changeHB = {this.changeHB}
           accept = {this.acceptPlayerChange}/>}
+        {changeScore && <ChangeScore opponent = {this.state.opponent} oppScore = {this.state.oppScore}
+          wakeScore = {this.state.wakeScore} onClick = {this.onChangeScoreClick} accept = {this.acceptScoreChange}/>}
         {enterDriveStart && <DriveStart onChange = {this.enterYardLine} yardLine = {this.state.startLine}
         changeRadio = {this.changeTerritory} submit = {this.submitDriveStart} territory = {this.state.startTerritory}
         cancel = {this.cancelDrive}/>}
