@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
-import DriveStart from './driveStart.jsx'
-import AddPlay from './addPlay.jsx'
-import PlayInfo from './playInfo.jsx'
-import PlayResult from './playResult.jsx'
-import PlayByPlay from './playByPlay.jsx'
-import PlayerStats from './playerStats.jsx'
-import ChangePlayer from './changePlayer.jsx'
+import DriveStart from './driveStart.jsx';
+import AddPlay from './addPlay.jsx';
+import PlayInfo from './playInfo.jsx';
+import PlayResult from './playResult.jsx';
+import PlayByPlay from './playByPlay.jsx';
+import PlayerStats from './playerStats.jsx';
+import ChangePlayer from './changePlayer.jsx';
+import ChangeScore from './changeScore.jsx';
+import ChangeInfo from './changeInfo.jsx';
 
 class drive {
   constructor(startLine, side){
@@ -100,6 +102,8 @@ class App extends Component {
       changeScore: false,
       changePlayer: false,
       changeInfo: false,
+      newYardLine: "",
+      newTerritory: "none",
       wakeScore: 0,
       oppScore: 0,
       quarter: 1,
@@ -233,6 +237,9 @@ class App extends Component {
 
     return (this.state.ballCarrier === player) ? {background: "#CFB53B"} : {background: '#504A4B'}
   }
+  changePlayer = () =>{
+    this.setState({changePlayer: true})
+  }
   changeQB = (e) => {
     let newQB = this.state.qbArray.find((qb) => qb.name === e.target.id);
     this.setState({qb: newQB})
@@ -243,6 +250,76 @@ class App extends Component {
   }
   acceptPlayerChange = () => {
     this.setState({changePlayer: false})
+  }
+  changeScore = () => {
+    this.setState({changeScore: true})
+  }
+  onChangeScoreClick = (e) => {
+    const id = e.target.id;
+    console.log(id)
+    //if id is for the opponent, change opponent score
+    if(id.includes('opponent')){
+      if(id.includes('pat')){
+        this.setState({oppScore: this.state.oppScore + 1});
+      }
+      else if(id.includes('fg')){
+        this.setState({oppScore: this.state.oppScore + 3});
+      }
+      else if(id.includes('mistake')){
+        this.setState({oppScore: this.state.oppScore - 1});
+      }
+    }
+    //do the same thing but for Wake's score
+    else{
+      if(id.includes('pat')){
+        this.setState({wakeScore: this.state.wakeScore + 1});
+      }
+      else if(id.includes('fg')){
+        this.setState({wakeScore: this.state.wakeScore + 3});
+      }
+      else if(id.includes('mistake')){
+        this.setState({wakeScore: this.state.wakeScore - 1});
+      }
+    }
+  }
+  acceptScoreChange = () => {
+    this.setState({changeScore: false});
+  }
+  changeInfo = () => {
+    this.setState({changeInfo: true})
+  }
+  changeDown = (e) => {
+    let newDown = parseInt(e.target.id,10);
+    this.setState({down: newDown});
+  }
+  changeDistance = (e) => {
+    if(e.target.id === '+'){
+      this.setState({distance: this.state.distance + 1});
+    }
+    else{
+      this.setState({distance: this.state.distance -1 });
+    }
+  }
+  newYardLine = (e) => {
+    const yardLine = parseInt(e.target.value,10);
+    const startLine = (isNaN(yardLine)) ? "" : yardLine
+    this.setState({newYardLine: startLine})
+  }
+  newTerritory = (e) => {
+    this.setState({newTerritory: e.target.value})
+  }
+  acceptInfoChange = () => {
+    if(this.state.newYardLine === ''){
+      this.setState({changeInfo: false});
+    }
+    else if(this.state.newYardLine !== '' && this.state.newTerritory === 'none'){
+      alert('Please choose a side of the field')
+    }
+    else if(this.state.newYardLine !== '' && this.state.newTerritory !== 'none'){
+      const yardLine = parseInt(this.state.newYardLine,10);
+      const ballOn = (this.state.newTerritory === 'own') ? 100-yardLine : yardLine;
+      this.setState({ballOn: ballOn, newYardLine: '', newTerritory: 'none', changeInfo: false});
+    }
   }
   checkTD = () => {
     this.setState({touchdown: !this.state.touchdown});
@@ -351,11 +428,8 @@ class App extends Component {
       distance: newDistance, ballOn: this.state.ballOn - parseInt(this.state.yardsGained,10)});
     }
   }
-  changePlayer = () =>{
-    this.setState({changePlayer: true})
-  }
   render() {
-    const {enterDriveStart, changePlayer} = this.state;
+    const {enterDriveStart, changePlayer, changeScore, changeInfo} = this.state;
     return (
       <div>
         <div className = 'liveInfo'>
@@ -370,17 +444,18 @@ class App extends Component {
               {this.state.down === 3 && `${this.state.down}rd and ${this.state.distance}`}
               {this.state.down === 4 && `${this.state.down}th and ${this.state.distance}`}
             </div>
-            <div>Ball on: {this.state.ballOn >= 50 && `Own ${100 -this.state.ballOn}`}
-              {this.state.ballOn < 50 && `${this.state.opponent} ${this.state.ballOn}`}</div>
-            <div>Drive Started: {this.state.driveStart}</div>
+            <div className = 'ballOn'>Ball on: {this.state.ballOn >50 && `Own ${100 -this.state.ballOn}`}
+              {this.state.ballOn < 50 && `${this.state.opponent} ${this.state.ballOn}`}
+              {this.state.ballOn === 50 && `50`}</div>
+            <div className = 'driveStarted'>Started: {this.state.driveStart}</div>
           </div>
           <div className = 'startDrive'>
             <button className = 'button' onClick = {this.startDrive}>New Drive</button>
             <button className = 'button' onClick = {this.endDrive}>End Drive</button>
           </div>
           <div className = 'gameButtons'>
-            <button>Change Score</button>
-            <button>Change Info</button>
+            <button onClick = {this.changeScore}>Change Score</button>
+            <button onClick = {this.changeInfo}>Change Info</button>
             <button onClick = {this.changePlayer}>Change Players</button>
 
           </div>
@@ -403,6 +478,12 @@ class App extends Component {
         {changePlayer && <ChangePlayer qb = {this.state.qb} hb={this.state.hb} qbArray = {this.state.qbArray}
           hbArray = {this.state.hbArray} changeQB = {this.changeQB} changeHB = {this.changeHB}
           accept = {this.acceptPlayerChange}/>}
+        {changeScore && <ChangeScore opponent = {this.state.opponent} oppScore = {this.state.oppScore}
+          wakeScore = {this.state.wakeScore} onClick = {this.onChangeScoreClick} accept = {this.acceptScoreChange}/>}
+        {changeInfo && <ChangeInfo down = {this.state.down} changeDown = {this.changeDown} distance = {this.state.distance}
+          changeDistance = {this.changeDistance} ballOn = {this.state.ballOn} opponent = {this.state.opponent}
+          onChange = {this.newYardLine} changeRadio = {this.newTerritory} yardLine = {this.state.newYardLine}
+          territory = {this.state.newTerritory} accept = {this.acceptInfoChange}/>}
         {enterDriveStart && <DriveStart onChange = {this.enterYardLine} yardLine = {this.state.startLine}
         changeRadio = {this.changeTerritory} submit = {this.submitDriveStart} territory = {this.state.startTerritory}
         cancel = {this.cancelDrive}/>}
