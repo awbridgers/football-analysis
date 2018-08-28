@@ -221,7 +221,7 @@ class App extends Component {
         this.setState({playType: 'null', showResults: false, ballCarrier: ''})
       }
       else if(e.target.id === 'sack'){
-        this.setState({playType: e.target.id, showResults: true, ballCarrier: this.state.qb, sack: true})
+        this.setState({playType: e.target.id, showResults: true, ballCarrier: this.state.qb.name, sack: true})
       }
       else{
         this.setState({playType: e.target.id, showResults: false, ballCarrier: ''})
@@ -367,6 +367,8 @@ class App extends Component {
       alert('Please add the the number of yards gained.')
     }
     else{
+      const yacInt = (this.state.yardsAfterCatch === '') ? 0 : parseInt(this.state.yardsAfterCatch,10);
+      const yardsInt = (this.state.yardsGained === '') ? 0 : parseInt(this.state.yardsGained,10)
       let currentPlay = {
         down: this.state.down,
         distance: this.state.distance,
@@ -375,8 +377,8 @@ class App extends Component {
         ballOn: this.state.ballOn,
         playType: this.state.playType,
         ballCarrier: this.state.ballCarrier,
-        yardsGained: parseInt(this.state.yardsGained,10),
-        yac: parseInt(this.state.yardsAfterCatch,10),
+        yardsGained: yardsInt,
+        yac: yacInt,
         fumble: this.state.fumble,
         touchdown: this.state.touchdown,
         interception: this.state.interception,
@@ -442,7 +444,8 @@ class App extends Component {
       qb.rushYards += parseInt(this.state.yardsGained,10);
     }
 
-
+    let yardsGained = (this.state.yardsGained === '') ? 0 : parseInt(this.state.yardsGained,10);
+    console.log(currentPlay);
     let scoreAdder = (this.state.touchdown)? 6 : 0
     let newDown = (parseInt(this.state.yardsGained,10) >= this.state.distance) ? 1 : this.state.down + 1;
     let newDistance = (parseInt(this.state.yardsGained,10) >= this.state.distance) ? 10 : this.state.distance-this.state.yardsGained;
@@ -450,7 +453,7 @@ class App extends Component {
       playArray: [...this.state.playArray, currentPlay],
       down: newDown,
       distance: newDistance,
-      ballOn: this.state.ballOn - parseInt(this.state.yardsGained,10),
+      ballOn: this.state.ballOn - yardsGained,
       wakeScore: this.state.wakeScore + scoreAdder,
       playType: 'null',
       showResults: false,
@@ -469,17 +472,20 @@ class App extends Component {
   getResults = () =>{
     this.setState({finishGame: true})
   }
+  goBack = () => {
+    this.setState({finishGame: false});
+  }
   render() {
     const {enterDriveStart, changePlayer, changeScore, changeInfo,finishGame} = this.state;
     if(finishGame){
       return(
         <div>
-          <FinishGame />
+          <FinishGame driveArray = {this.state.driveArray} goBack = {this.goBack}/>
         </div>
       )
     }
     return (
-      <div>
+      <div className = 'app'>
         <div className = 'liveInfo'>
           <div className = 'score'>
             <div className = 'wakeScore'><b>Wake Forest</b><p>{this.state.wakeScore}</p></div>
@@ -515,7 +521,7 @@ class App extends Component {
         <div className = "playbyplay"><PlayByPlay playArray = {this.state.playArray} opponent = {this.state.opponent} /></div>
         <div className = 'addPlays'>
           <div className = 'runOrPass'><AddPlay style = {this.stylePlayType} onClick = {this.playType}/></div>
-          <div className = 'playInfo'><PlayInfo qb = {this.state.qb} hb = {this.state.hbArray[0]} wr = {this.state.wrArray}
+          <div className = 'playInfo'><PlayInfo qb = {this.state.qb} hb = {this.state.hb} wr = {this.state.wrArray}
             playType = {this.state.playType} stylePlayer = {this.stylePlayer} onClick = {this.choosePlayer} />
           </div>
           <div className = 'results'><PlayResult playType = {this.state.playType} TD = {this.state.touchdown}
