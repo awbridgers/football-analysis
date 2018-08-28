@@ -249,9 +249,13 @@ width: 200px;
 }
 .gameButtons{
  text-align: center;
- padding-top: 20px;
+ padding-top: 15px;
 }
-.gameButtons button{
+.finishGame{
+  text-align: center;
+  padding-top: 15px;
+}
+.gameButtons button, .finishGame button{
   height:35px;
   width: 85px;
   margin: 0px 3px 0px 3px;
@@ -302,4 +306,8 @@ width: 200px;
   padding-bottom: 25px;
   font-size: 18px;
   font-weight: bold;
+}
+.playsTable{
+  color: white;
+  width:100%;
 }

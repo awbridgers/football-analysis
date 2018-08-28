@@ -9,6 +9,7 @@ import PlayerStats from './playerStats.jsx';
 import ChangePlayer from './changePlayer.jsx';
 import ChangeScore from './changeScore.jsx';
 import ChangeInfo from './changeInfo.jsx';
+import FinishGame from './finishGame.jsx';
 
 
 
@@ -91,6 +92,7 @@ class App extends Component {
       qb: this.kHinton,
       hb: this.mColburn,
       fieldPosition: [],
+      finishGame: false,
       activeDrive: false,
       enterDriveStart: false,
       changeScore: false,
@@ -379,6 +381,7 @@ class App extends Component {
         touchdown: this.state.touchdown,
         interception: this.state.interception,
         completePass: this.state.completePass,
+        drop: this.state.drop,
         sacked: this.state.sack,
         qb: this.state.qb,
         hb: this.state.hb
@@ -463,8 +466,18 @@ class App extends Component {
     });
     }
   }
+  getResults = () =>{
+    this.setState({finishGame: true})
+  }
   render() {
-    const {enterDriveStart, changePlayer, changeScore, changeInfo} = this.state;
+    const {enterDriveStart, changePlayer, changeScore, changeInfo,finishGame} = this.state;
+    if(finishGame){
+      return(
+        <div>
+          <FinishGame />
+        </div>
+      )
+    }
     return (
       <div>
         <div className = 'liveInfo'>
@@ -494,7 +507,9 @@ class App extends Component {
             <button onClick = {this.changeScore}>Change Score</button>
             <button onClick = {this.changeInfo}>Change Info</button>
             <button onClick = {this.changePlayer}>Change Players</button>
-
+          </div>
+          <div className = 'finishGame'>
+            <button onClick = {this.getResults}>Results</button>
           </div>
         </div>
         <div className = "playbyplay"><PlayByPlay playArray = {this.state.playArray} opponent = {this.state.opponent} /></div>
