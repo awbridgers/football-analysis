@@ -35,12 +35,12 @@ body{
   margin-top: 10px;
 }
 .driveInfo {
-  text-align: center;
+text-align: center;
 }
 .driveInfo div{
 display: inline-block;
 font-size: 18px;
-width: 150px;
+width: 200px;
 }
 .driveStart{
   position: absolute;

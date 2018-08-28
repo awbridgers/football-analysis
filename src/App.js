@@ -10,13 +10,7 @@ import ChangePlayer from './changePlayer.jsx';
 import ChangeScore from './changeScore.jsx';
 import ChangeInfo from './changeInfo.jsx';
 
-class drive {
-  constructor(startLine, side){
-    this.startLine = startLine
-    this.side = side;
-    this.plays = []
-  }
-}
+
 
 class player {
   constructor(name,position){
@@ -125,7 +119,8 @@ class App extends Component {
       drop: false,
       yardsGained: "",
       yardsAfterCatch: "",
-      playArray: []
+      playArray: [],
+      driveArray:[]
     }
   }
   componentDidMount(){
@@ -145,9 +140,16 @@ class App extends Component {
     return (avg > 50) ? `own ${100-avg}` : `opponent's ${avg}`;
   }
   startDrive = () => {
-    this.setState({enterDriveStart: true})
+    if(!this.state.activeDrive){
+      this.setState({enterDriveStart: true})
+    }
+    else{
+      alert("Please end the current drive before starting a new one")
+    }
   }
   endDrive = () => {
+    const currentDrive = this.state.playArray;
+
     if(this.state.activeDrive){
       this.setState({
       activeDrive: false, down: 1,
@@ -166,7 +168,10 @@ class App extends Component {
       completePass: false,
       drop: false,
       yardsGained: "",
-      yardsAfterCatch: ""})
+      yardsAfterCatch: "",
+      driveArray: [...this.state.driveArray, currentDrive],
+      playArray: []
+    })
     }
     else{
       console.log("No drive is active")
@@ -209,7 +214,7 @@ class App extends Component {
     }
   }
   playType = (e) => {
-    // if(this.state.startLine !== ""){
+    if(this.state.activeDrive && !(this.state.changePlayer || this.state.changeScore || this.state.changeInfo)){
       if(e.target.id === this.state.playType){
         this.setState({playType: 'null', showResults: false, ballCarrier: ''})
       }
@@ -219,10 +224,12 @@ class App extends Component {
       else{
         this.setState({playType: e.target.id, showResults: false, ballCarrier: ''})
       }
-    // }
+    }
   }
   choosePlayer = (e) => {
-    this.setState({ballCarrier: e.target.id, showResults: true})
+    if(this.state.activeDrive && !(this.state.changePlayer || this.state.changeScore || this.state.changeInfo)){
+      this.setState({ballCarrier: e.target.id, showResults: true})
+    }
   }
   stylePlayType = (type) => {
     if(this.state.playType === 'null'){
@@ -238,7 +245,9 @@ class App extends Component {
     return (this.state.ballCarrier === player) ? {background: "#CFB53B"} : {background: '#504A4B'}
   }
   changePlayer = () =>{
-    this.setState({changePlayer: true})
+    if(!(this.state.changePlayer || this.state.changeScore || this.state.changeInfo)){
+      this.setState({changePlayer: true})
+    }
   }
   changeQB = (e) => {
     let newQB = this.state.qbArray.find((qb) => qb.name === e.target.id);
@@ -252,7 +261,9 @@ class App extends Component {
     this.setState({changePlayer: false})
   }
   changeScore = () => {
-    this.setState({changeScore: true})
+    if(!(this.state.changePlayer || this.state.changeScore || this.state.changeInfo)){
+      this.setState({changeScore: true})
+    }
   }
   onChangeScoreClick = (e) => {
     const id = e.target.id;
@@ -286,7 +297,9 @@ class App extends Component {
     this.setState({changeScore: false});
   }
   changeInfo = () => {
-    this.setState({changeInfo: true})
+    if(!(this.state.changePlayer || this.state.changeScore || this.state.changeInfo)){
+      this.setState({changeInfo: true})
+    }
   }
   changeDown = (e) => {
     let newDown = parseInt(e.target.id,10);
@@ -392,13 +405,19 @@ class App extends Component {
         }
         if(this.state.touchdown){
           target.receivingTDs ++;
+          qb.passingTDs ++;
         }
         if(this.state.fumble){
           target.fumbles++;
         }
       }
-      if(this.state.drop){
-        target.drop++
+      else{
+        if(this.state.drop){
+          target.drops++
+        }
+        if(this.state.interception){
+          qb.interceptions++;
+        }
       }
       //console.log(qb,target)
     }
@@ -421,11 +440,27 @@ class App extends Component {
     }
 
 
-
+    let scoreAdder = (this.state.touchdown)? 6 : 0
     let newDown = (parseInt(this.state.yardsGained,10) >= this.state.distance) ? 1 : this.state.down + 1;
     let newDistance = (parseInt(this.state.yardsGained,10) >= this.state.distance) ? 10 : this.state.distance-this.state.yardsGained;
-    this.setState({playArray: [...this.state.playArray, currentPlay], down: newDown,
-      distance: newDistance, ballOn: this.state.ballOn - parseInt(this.state.yardsGained,10)});
+    this.setState({
+      playArray: [...this.state.playArray, currentPlay],
+      down: newDown,
+      distance: newDistance,
+      ballOn: this.state.ballOn - parseInt(this.state.yardsGained,10),
+      wakeScore: this.state.wakeScore + scoreAdder,
+      playType: 'null',
+      showResults: false,
+      ballCarrier: '',
+      touchdown: false,
+      fumble: false,
+      sack: false,
+      interception: false,
+      completePass: false,
+      drop: false,
+      yardsGained: "",
+      yardsAfterCatch: "",
+    });
     }
   }
   render() {
@@ -444,10 +479,12 @@ class App extends Component {
               {this.state.down === 3 && `${this.state.down}rd and ${this.state.distance}`}
               {this.state.down === 4 && `${this.state.down}th and ${this.state.distance}`}
             </div>
-            <div className = 'ballOn'>Ball on: {this.state.ballOn >50 && `Own ${100 -this.state.ballOn}`}
+            <div className = 'ballOn'>Ball on: {this.state.ballOn >50 && `Wake ${100 -this.state.ballOn}`}
               {this.state.ballOn < 50 && `${this.state.opponent} ${this.state.ballOn}`}
               {this.state.ballOn === 50 && `50`}</div>
-            <div className = 'driveStarted'>Started: {this.state.driveStart}</div>
+            <div className = 'driveStarted'>Started: {this.state.startTerritory === 'own' && `Wake ${this.state.driveStart}`}
+              {this.state.startTerritory === 'opponent' && `${this.state.opponent} ${this.state.driveStart}`}
+            </div>
           </div>
           <div className = 'startDrive'>
             <button className = 'button' onClick = {this.startDrive}>New Drive</button>
