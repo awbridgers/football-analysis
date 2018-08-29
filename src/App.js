@@ -10,6 +10,7 @@ import ChangePlayer from './changePlayer.jsx';
 import ChangeScore from './changeScore.jsx';
 import ChangeInfo from './changeInfo.jsx';
 import FinishGame from './finishGame.jsx';
+import PickWR from './pickWR.jsx';
 
 
 
@@ -98,6 +99,7 @@ class App extends Component {
       changeScore: false,
       changePlayer: false,
       changeInfo: false,
+      pickWR: false,
       newYardLine: "",
       newTerritory: "none",
       wakeScore: 0,
@@ -115,7 +117,6 @@ class App extends Component {
       ballCarrier: '',
       touchdown: false,
       fumble: false,
-      sack: false,
       interception: false,
       completePass: false,
       drop: false,
@@ -165,7 +166,6 @@ class App extends Component {
       ballCarrier: '',
       touchdown: false,
       fumble: false,
-      sack: false,
       interception: false,
       completePass: false,
       drop: false,
@@ -221,7 +221,7 @@ class App extends Component {
         this.setState({playType: 'null', showResults: false, ballCarrier: ''})
       }
       else if(e.target.id === 'sack'){
-        this.setState({playType: e.target.id, showResults: true, ballCarrier: this.state.qb.name, sack: true})
+        this.setState({playType: e.target.id, showResults: true, ballCarrier: this.state.qb.name})
       }
       else{
         this.setState({playType: e.target.id, showResults: false, ballCarrier: ''})
@@ -230,7 +230,12 @@ class App extends Component {
   }
   choosePlayer = (e) => {
     if(this.state.activeDrive && !(this.state.changePlayer || this.state.changeScore || this.state.changeInfo)){
-      this.setState({ballCarrier: e.target.id, showResults: true})
+      if(e.target.id === 'wr'){
+        this.setState({pickWR: true});
+      }
+      else{
+        this.setState({ballCarrier: e.target.id, showResults: true, pickWR: false})
+      }
     }
   }
   stylePlayType = (type) => {
@@ -242,6 +247,13 @@ class App extends Component {
   stylePlayer = (player) => {
     if(this.state.ballCarrier === ""){
       return;
+    }
+    //if the play is a run and the player chosen is a wide receiver, highlight the WR button
+    if(this.state.playType.includes('run') &&
+      typeof(this.state.wrArray.find((player) => player.name === this.state.ballCarrier)) !== 'undefined'){
+      if(player === 'wr'){
+        return {background: "#CFB53B"};
+      }
     }
 
     return (this.state.ballCarrier === player) ? {background: "#CFB53B"} : {background: '#504A4B'}
@@ -384,7 +396,6 @@ class App extends Component {
         interception: this.state.interception,
         completePass: this.state.completePass,
         drop: this.state.drop,
-        sacked: this.state.sack,
         qb: this.state.qb,
         hb: this.state.hb
       }
@@ -460,7 +471,6 @@ class App extends Component {
       ballCarrier: '',
       touchdown: false,
       fumble: false,
-      sack: false,
       interception: false,
       completePass: false,
       drop: false,
@@ -476,7 +486,7 @@ class App extends Component {
     this.setState({finishGame: false});
   }
   render() {
-    const {enterDriveStart, changePlayer, changeScore, changeInfo,finishGame} = this.state;
+    const {enterDriveStart, changePlayer, changeScore, changeInfo,finishGame, pickWR} = this.state;
     if(finishGame){
       return(
         <div>
@@ -546,6 +556,7 @@ class App extends Component {
           changeDistance = {this.changeDistance} ballOn = {this.state.ballOn} opponent = {this.state.opponent}
           onChange = {this.newYardLine} changeRadio = {this.newTerritory} yardLine = {this.state.newYardLine}
           territory = {this.state.newTerritory} accept = {this.acceptInfoChange}/>}
+        {pickWR && <PickWR wr = {this.state.wrArray} onClick = {this.choosePlayer} ballCarrier = {this.state.ballCarrier}/>}
         {enterDriveStart && <DriveStart onChange = {this.enterYardLine} yardLine = {this.state.startLine}
         changeRadio = {this.changeTerritory} submit = {this.submitDriveStart} territory = {this.state.startTerritory}
         cancel = {this.cancelDrive}/>}

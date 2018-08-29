@@ -12,7 +12,7 @@ const FinishGame = (props) => (
           <tr>
             <th>Wake</th><th>Opp</th><th>Down</th><th>To Go</th><th>Ball On</th><th>QB</th><th>Play Type</th>
             <th>Ball Carrier</th><th>Yards</th><th>TD</th><th>Comp</th><th>YAC</th><th>Drop</th><th>Int</th>
-            <th>Fmbl</th><th>Sack</th>
+            <th>Fmbl</th>
           </tr>
           {props.driveArray.map((drive)=>{
             return(
@@ -30,7 +30,6 @@ const FinishGame = (props) => (
                     <td>{plays.drop && <div>&#x2714;</div>}{!plays.drop && <div>&#x2716;</div>}</td>
                     <td>{plays.interception && <div>&#x2714;</div>}{!plays.interception && <div>&#x2716;</div>}</td>
                     <td>{plays.fumble && <div>&#x2714;</div>}{!plays.fumble && <div>&#x2716;</div>}</td>
-                    <td>{plays.sacked && <div>&#x2714;</div>}{!plays.sacked && <div>&#x2716;</div>}</td>
                   </tr>
                 )
               })
