@@ -26,7 +26,7 @@ const FinishGame = (props) => (
                     </td>
                     <td>{plays.qb.name}</td><td>{plays.playType}</td><td>{plays.ballCarrier}</td><td>{plays.yardsGained}</td>
                     <td>{plays.touchdown && <div>&#x2714;</div>}{!plays.touchdown && <div>&#x2716;</div>}</td>
-                    <td>{plays.completion && <div>&#x2714;</div>}{!plays.completion && <div>&#x2716;</div>}</td><td>{plays.yac}</td>
+                    <td>{plays.completePass && <div>&#x2714;</div>}{!plays.completePass && <div>&#x2716;</div>}</td><td>{plays.yac}</td>
                     <td>{plays.drop && <div>&#x2714;</div>}{!plays.drop && <div>&#x2716;</div>}</td>
                     <td>{plays.interception && <div>&#x2714;</div>}{!plays.interception && <div>&#x2716;</div>}</td>
                     <td>{plays.fumble && <div>&#x2714;</div>}{!plays.fumble && <div>&#x2716;</div>}</td>
@@ -38,6 +38,7 @@ const FinishGame = (props) => (
           })}
         </tbody>
       </table>
+      <div style = {{color: 'white'}}>Average Field Position: {props.avg}</div>
     </Scrollbars>
   </div>
 )

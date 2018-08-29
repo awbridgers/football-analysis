@@ -480,7 +480,7 @@ class App extends Component {
     if(finishGame){
       return(
         <div>
-          <FinishGame driveArray = {this.state.driveArray} goBack = {this.goBack}/>
+          <FinishGame driveArray = {this.state.driveArray} goBack = {this.goBack} avg = {this.averageFieldPos()}/>
         </div>
       )
     }
