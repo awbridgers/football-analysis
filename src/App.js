@@ -517,6 +517,10 @@ class App extends Component {
           <div className = 'finishGame'>
             <button onClick = {this.getResults}>Results</button>
           </div>
+          <div className = 'activePlayers'>
+            <p>QB: {this.state.qb.name}</p>
+            <p>HB: {this.state.hb.name}</p>
+          </div>
         </div>
         <div className = "playbyplay"><PlayByPlay playArray = {this.state.playArray} opponent = {this.state.opponent} /></div>
         <div className = 'addPlays'>
