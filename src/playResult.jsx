@@ -42,11 +42,6 @@ const PlayResults = (props) => (
               <p><label>Yards: </label><input size = '1' type = 'text' value = {props.yardsGained} onChange = {props.changeInput}></input></p>
             </div>
           }
-          {props.playType === 'penalty' &&
-            <div>
-              <p><label>Penalty Yards: </label><input size = '1' type = 'text' value = {props.yardsGained} onChange = {props.changeInput}></input></p>
-            </div>
-          }
             <button className = 'playButton' onClick = {props.addPlay}>Add Play</button>
       </div>}
   </div>

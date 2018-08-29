@@ -8,7 +8,7 @@ const PlayInfo = (props) => (
     <div>
       <p><u>Ball Carrier</u></p>
       <p><button onClick = {props.onClick} id = {props.qb.name}style = {props.stylePlayer(props.qb.name)}>{props.qb.name}</button></p>
-      <p><button onClick = {props.onClick}  id ={props.hb.name}style = {props.stylePlayer(props.hb.name)}>{props.hb.name}</button></p>
+      <p><button onClick = {props.onClick} id ={props.hb.name}style = {props.stylePlayer(props.hb.name)}>{props.hb.name}</button></p>
       <p><button onClick = {props.onClick}  id = 'wr' style = {props.stylePlayer('wr')}>WR</button></p>
     </div>
     }
@@ -23,7 +23,7 @@ const PlayInfo = (props) => (
           })}
         </div>
     </div>}
-    
+
   </div>
 )
 
