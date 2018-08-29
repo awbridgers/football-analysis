@@ -40,6 +40,7 @@ const PlayResults = (props) => (
           {props.playType === 'sack' &&
             <div>
               <p><label>Yards: </label><input size = '1' type = 'text' value = {props.yardsGained} onChange = {props.changeInput}></input></p>
+                <p><input type = 'checkbox' checked = {props.fumble} onChange = {props.checkFumble}></input><label>  Fumble</label></p>
             </div>
           }
             <button className = 'playButton' onClick = {props.addPlay}>Add Play</button>

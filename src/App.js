@@ -117,7 +117,6 @@ class App extends Component {
       ballCarrier: '',
       touchdown: false,
       fumble: false,
-      sack: false,
       interception: false,
       completePass: false,
       drop: false,
@@ -167,7 +166,6 @@ class App extends Component {
       ballCarrier: '',
       touchdown: false,
       fumble: false,
-      sack: false,
       interception: false,
       completePass: false,
       drop: false,
@@ -223,7 +221,7 @@ class App extends Component {
         this.setState({playType: 'null', showResults: false, ballCarrier: ''})
       }
       else if(e.target.id === 'sack'){
-        this.setState({playType: e.target.id, showResults: true, ballCarrier: this.state.qb.name, sack: true})
+        this.setState({playType: e.target.id, showResults: true, ballCarrier: this.state.qb.name})
       }
       else{
         this.setState({playType: e.target.id, showResults: false, ballCarrier: ''})
@@ -398,7 +396,6 @@ class App extends Component {
         interception: this.state.interception,
         completePass: this.state.completePass,
         drop: this.state.drop,
-        sacked: this.state.sack,
         qb: this.state.qb,
         hb: this.state.hb
       }
@@ -474,7 +471,6 @@ class App extends Component {
       ballCarrier: '',
       touchdown: false,
       fumble: false,
-      sack: false,
       interception: false,
       completePass: false,
       drop: false,
