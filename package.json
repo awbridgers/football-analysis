@@ -1,8 +1,10 @@
 {
   "name": "football-analysis",
   "version": "0.1.0",
+  "homepage": "awbridgers.github.io/football-analysis",
   "private": true,
   "dependencies": {
+    "gh-pages": "^1.2.0",
     "react": "^16.4.1",
     "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^16.4.1",

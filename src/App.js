@@ -90,7 +90,7 @@ class App extends Component {
       wrArray: [this.aBachman, this.gDortch,this.sWashington, this.sSurratt, this.jSriraman,
         this.sClaude, this.jFreudenthal, this.jLubrano, this.bChapman],
       arrayOfAllPlayers: [],
-      qb: this.kHinton,
+      qb: this.sHartman,
       hb: this.mColburn,
       fieldPosition: [],
       finishGame: false,

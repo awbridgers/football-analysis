@@ -212,8 +212,9 @@ width: 200px;
   font-weight: bold;
 }
 .playList td{
-  background: blue;
+  background: #CFB53B;
   vertical-align: top;
+  color: black;
 }
 .playerStats{
   height: 50vh;
