@@ -21,6 +21,7 @@ const PlayInfo = (props) => (
               <div key = {i}><button onClick = {props.onClick} id = {player.name} style = {props.stylePlayer(player.name)}>{player.name}</button></div>
             )
           })}
+          <button onClick = {props.onClick} id = {props.hb.name} style = {props.stylePlayer(props.hb.name)}>{props.hb.name}</button>
         </div>
     </div>}
 
