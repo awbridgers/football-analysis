@@ -63,12 +63,13 @@ class App extends Component {
     //start playerRoster here
     //qbs
     this.kHinton = new player('Kendall Hinton', 'qb');
-    this.jNewman = new player ('Jaimie Newman', 'qb');
+    this.jNewman = new player ('Jamie Newman', 'qb');
     this.sHartman = new player('Sam Hartman', 'qb');
+    this.tBowers = new player('Tayvon Bowers', 'qb');
     //hbs
     this.cCarney = new player('Cade Carney', 'hb');
     this.mColburn =new player('Matt Colburn', 'hb');
-    this.cBeal = new player('Christian Beal', 'hb');
+    this.cBeal = new player('Christian Beal-Smith', 'hb');
     this.tNdlovu = new player('Trey Ndlovu', 'hb');
     this.dDelaney = new player('DeAndre\' Delaney', 'hb');
     //te
@@ -82,13 +83,14 @@ class App extends Component {
     this.sSurratt = new player('Sage Surratt', 'wr');
     this.jSriraman = new player('James Sriraman', 'wr');
     this.sClaude = new player('Steven Claude', 'wr')
+    this.kHintonWR = new player('Kendall Hinton', 'wr')
 
 
     this.state = {
-      qbArray: [this.kHinton, this.jNewman, this.sHartman],
+      qbArray: [this.kHinton, this.jNewman, this.sHartman, this.tBowers],
       hbArray: [this.cCarney, this.mColburn, this.cBeal, this.tNdlovu, this.dDelaney],
-      wrArray: [this.aBachman, this.gDortch,this.sWashington, this.sSurratt, this.jSriraman,
-        this.sClaude, this.jFreudenthal, this.jLubrano, this.bChapman],
+      wrArray: [this.aBachman, this.gDortch,this.sWashington, this.sSurratt,
+        this.sClaude, this.jFreudenthal, this.jLubrano, this.bChapman, this.kHintonWR],
       arrayOfAllPlayers: [],
       qb: this.sHartman,
       hb: this.mColburn,
