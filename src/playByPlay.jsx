@@ -24,7 +24,7 @@ export default class PlayByPlay extends Component {
                       {play.ballOn < 50 && `on the ${this.props.opponent} ${play.ballOn}`}
                     </td>
                   {play.playType.includes('run') && <td style = {{width:'70%'}}>{play.ballCarrier} runs for a
-                  {play.yardsGained > 0 ? ' gain' : ' loss'} of {Math.abs(play.yardsGained)} {play.touchdown && ` for a TD`}</td>}
+                  {play.yardsGained >= 0 ? ' gain' : ' loss'} of {Math.abs(play.yardsGained)} {play.touchdown && ` for a TD`}</td>}
                   {play.playType.includes('pass') && <td style = {{width:'70%'}}>{play.qb.name} pass to {play.ballCarrier} is
                   {play.completePass && ` complete for a gain of ${play.yardsGained}`}{play.touchdown && ` and a TD`}
                   {!play.completePass && !play.interception && ` incomplete`}{play.interception && ` intercepted`}</td>}

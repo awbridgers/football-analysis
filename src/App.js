@@ -90,7 +90,7 @@ class App extends Component {
 
     this.state = {
       qbArray: [this.kHinton, this.jNewman, this.sHartman, this.tBowers],
-      hbArray: [this.cCarney, this.mColburn, this.cBeal, this.tNdlovu, this.dDelaney],
+      hbArray: [this.cCarney, this.mColburn, this.cBeal, this.wDrawdy, this.dDelaney],
       wrArray: [this.aBachman, this.gDortch,this.sWashington, this.sSurratt,
         this.sClaude, this.jFreudenthal, this.jRoberson, this.bChapman, this.kHintonWR],
       arrayOfAllPlayers: [],
@@ -464,6 +464,9 @@ class App extends Component {
     let scoreAdder = (this.state.touchdown)? 6 : 0
     let newDown = (parseInt(this.state.yardsGained,10) >= this.state.distance) ? 1 : this.state.down + 1;
     let newDistance = (parseInt(this.state.yardsGained,10) >= this.state.distance) ? 10 : this.state.distance-this.state.yardsGained;
+    if(newDistance >= this.state.ballOn - yardsGained || isNaN(newDistance)){
+      newDistance = 'Goal'
+    }
     this.setState({
       playArray: [...this.state.playArray, currentPlay],
       down: newDown,
