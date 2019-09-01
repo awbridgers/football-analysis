@@ -14,6 +14,7 @@ const ChangeInfo = (props) => (
       <p style = {{borderBottom: '2px solid black'}}>Distance: {props.distance}</p>
       <p><button onClick = {props.changeDistance} id = '+'>+ 1</button></p>
       <p><button onClick = {props.changeDistance} id = '-'> - 1</button></p>
+      <p><button onClick = {props.changeDistance} id = 'goal'>Goal</button></p>
     </div>
     <div style = {{display: 'inline-block', verticalAlign: 'top', width:'250px'}}>
       <p style = {{borderBottom: '2px solid black'}}>Ball on: {props.ballOn >= 50 && `Own ${100 -props.ballOn}`}

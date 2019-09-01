@@ -68,34 +68,33 @@ class App extends Component {
     this.tBowers = new player('Tayvon Bowers', 'qb');
     //hbs
     this.cCarney = new player('Cade Carney', 'hb');
-    this.mColburn =new player('Matt Colburn', 'hb');
     this.cBeal = new player('Christian Beal-Smith', 'hb');
-    this.tNdlovu = new player('Trey Ndlovu', 'hb');
-    this.dDelaney = new player('DeAndre\' Delaney', 'hb');
-    this.wDrawdy = new player('Will Drawdy', 'hb');
+    this.kWalker = new player('Kenneth Walker III', 'hb');
+    // this.dDelaney = new player('DeAndre\' Delaney', 'hb');
+    // this.wDrawdy = new player('Will Drawdy', 'hb');
     //te
     this.jFreudenthal = new player ('Jack Freudenthal', 'te');
     this.jLubrano = new player ('Jaren Lubrano', 'te');
     this.bChapman = new player ('Brandon Chapman', 'te');
     //wr
-    this.aBachman = new player('Alex Bachman', 'wr');
-    this.gDortch = new player('Greg Dortch', 'wr');
     this.sWashington = new player('Scotty Washington', 'wr');
     this.sSurratt = new player('Sage Surratt', 'wr');
-    this.jSriraman = new player('James Sriraman', 'wr');
     this.sClaude = new player('Steven Claude', 'wr');
     this.kHintonWR = new player('Kendall Hinton', 'wr');
     this.jRoberson = new player('Jaquarii Roberson','wr');
+    this.wJones = new player('Waydale Jones', 'wr');
+    this.aPerry = new player('A.T. Perry', 'wr');
+    this.iIsaac = new player('Isaiah Isaac', 'wr');
 
 
     this.state = {
-      qbArray: [this.kHinton, this.jNewman, this.sHartman, this.tBowers],
-      hbArray: [this.cCarney, this.mColburn, this.cBeal, this.wDrawdy, this.dDelaney],
-      wrArray: [this.aBachman, this.gDortch,this.sWashington, this.sSurratt,
-        this.sClaude, this.jFreudenthal, this.jRoberson, this.bChapman, this.kHintonWR],
+      qbArray: [this.jNewman, this.sHartman, this.tBowers],
+      hbArray: [this.cCarney, this.mColburn, this.cBeal, this.kWalker, this.dDelaney],
+      wrArray: [this.sWashington, this.sSurratt, this.sClaude, this.jFreudenthal,
+        this.jRoberson, this.bChapman, this.kHintonWR, this.wJones, this.aPerry, this.iIsaac],
       arrayOfAllPlayers: [],
-      qb: this.sHartman,
-      hb: this.mColburn,
+      qb: this.jNewman,
+      hb: this.cCarney,
       fieldPosition: [],
       finishGame: false,
       activeDrive: false,
@@ -324,7 +323,10 @@ class App extends Component {
     this.setState({down: newDown});
   }
   changeDistance = (e) => {
-    if(e.target.id === '+'){
+    if(e.target.id === 'goal'){
+      this.setState({distance:'Goal'})
+    }
+    else if(e.target.id === '+'){
       this.setState({distance: this.state.distance + 1});
     }
     else{
@@ -457,6 +459,9 @@ class App extends Component {
       qb.sacked ++;
       qb.rushAttempts ++;
       qb.rushYards += parseInt(this.state.yardsGained,10);
+      if(this.state.fumble){
+        qb.fumbles++;
+      }
     }
 
     let yardsGained = (this.state.yardsGained === '') ? 0 : parseInt(this.state.yardsGained,10);
