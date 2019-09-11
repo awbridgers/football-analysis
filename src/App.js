@@ -70,8 +70,8 @@ class App extends Component {
     this.cCarney = new player('Cade Carney', 'hb');
     this.cBeal = new player('Christian Beal-Smith', 'hb');
     this.kWalker = new player('Kenneth Walker III', 'hb');
-    // this.dDelaney = new player('DeAndre\' Delaney', 'hb');
-    // this.wDrawdy = new player('Will Drawdy', 'hb');
+    this.dDelaney = new player('DeAndre\' Delaney', 'hb');
+    this.wDrawdy = new player('Will Drawdy', 'hb');
     //te
     this.jFreudenthal = new player ('Jack Freudenthal', 'te');
     this.jLubrano = new player ('Jaren Lubrano', 'te');
@@ -89,7 +89,7 @@ class App extends Component {
 
     this.state = {
       qbArray: [this.jNewman, this.sHartman, this.tBowers],
-      hbArray: [this.cCarney, this.mColburn, this.cBeal, this.kWalker, this.dDelaney],
+      hbArray: [this.cCarney, this.cBeal, this.kWalker, this.dDelaney, this.wDrawdy],
       wrArray: [this.sWashington, this.sSurratt, this.sClaude, this.jFreudenthal,
         this.jRoberson, this.bChapman, this.kHintonWR, this.wJones, this.aPerry, this.iIsaac],
       arrayOfAllPlayers: [],
