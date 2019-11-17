@@ -62,19 +62,19 @@ class App extends Component {
     super();
     //start playerRoster here
     //qbs
-    this.kHinton = new player('Kendall Hinton', 'qb');
     this.jNewman = new player ('Jamie Newman', 'qb');
     this.sHartman = new player('Sam Hartman', 'qb');
     this.tBowers = new player('Tayvon Bowers', 'qb');
+    this.mKern = new player('Michael Kern', 'qb')
     //hbs
     this.cCarney = new player('Cade Carney', 'hb');
     this.cBeal = new player('Christian Beal-Smith', 'hb');
     this.kWalker = new player('Kenneth Walker III', 'hb');
     this.dDelaney = new player('DeAndre\' Delaney', 'hb');
     this.wDrawdy = new player('Will Drawdy', 'hb');
+    this.kFlowers = new player('Kendrell Flowers')
     //te
     this.jFreudenthal = new player ('Jack Freudenthal', 'te');
-    this.jLubrano = new player ('Jaren Lubrano', 'te');
     this.bChapman = new player ('Brandon Chapman', 'te');
     //wr
     this.sWashington = new player('Scotty Washington', 'wr');
@@ -85,13 +85,14 @@ class App extends Component {
     this.wJones = new player('Waydale Jones', 'wr');
     this.aPerry = new player('A.T. Perry', 'wr');
     this.iIsaac = new player('Isaiah Isaac', 'wr');
+    this.dGreene = new player('Donavon Greene', 'wr')
 
 
     this.state = {
       qbArray: [this.jNewman, this.sHartman, this.tBowers],
-      hbArray: [this.cCarney, this.cBeal, this.kWalker, this.dDelaney, this.wDrawdy],
+      hbArray: [this.cCarney, this.cBeal, this.kWalker, this.dDelaney, this.wDrawdy, this.kFlowers],
       wrArray: [this.sWashington, this.sSurratt, this.sClaude, this.jFreudenthal,
-        this.jRoberson, this.bChapman, this.kHintonWR, this.wJones, this.aPerry, this.iIsaac],
+        this.jRoberson, this.bChapman, this.kHintonWR, this.wJones, this.aPerry, this.iIsaac, this.dGreene],
       arrayOfAllPlayers: [],
       qb: this.jNewman,
       hb: this.cCarney,
