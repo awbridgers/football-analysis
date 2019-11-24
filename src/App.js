@@ -509,56 +509,64 @@ class App extends Component {
     }
     return (
       <div className = 'app'>
-        <div className = 'liveInfo'>
-          <div className = 'score'>
-            <div className = 'wakeScore'><b>Wake Forest</b><p>{this.state.wakeScore}</p></div>
-            <div className = 'oppScore'><b>{this.state.opponent}</b><p>{this.state.oppScore}</p></div>
-          </div>
-          <div className = 'driveInfo'>
-            <div className = 'down'>
-              {this.state.down === 1 && `${this.state.down}st and ${this.state.distance}`}
-              {this.state.down === 2 && `${this.state.down}nd and ${this.state.distance}`}
-              {this.state.down === 3 && `${this.state.down}rd and ${this.state.distance}`}
-              {this.state.down === 4 && `${this.state.down}th and ${this.state.distance}`}
+        <div className = 'leftSide'>
+          <div className = 'liveInfo'>
+            <div className = 'score'>
+              <div className = 'wakeScore'><b>Wake Forest</b><p>{this.state.wakeScore}</p></div>
+              <div className = 'oppScore'><b>{this.state.opponent}</b><p>{this.state.oppScore}</p></div>
             </div>
-            <div className = 'ballOn'>Ball on: {this.state.ballOn >50 && `Wake ${100 -this.state.ballOn}`}
-              {this.state.ballOn < 50 && `${this.state.opponent} ${this.state.ballOn}`}
-              {this.state.ballOn === 50 && `50`}</div>
-            <div className = 'driveStarted'>Started: {this.state.startTerritory === 'own' && `Wake ${this.state.driveStart}`}
-              {this.state.startTerritory === 'opponent' && `${this.state.opponent} ${this.state.driveStart}`}
+            <div className = 'driveInfo'>
+              <div className = 'down'>
+                {this.state.down === 1 && `${this.state.down}st and ${this.state.distance}`}
+                {this.state.down === 2 && `${this.state.down}nd and ${this.state.distance}`}
+                {this.state.down === 3 && `${this.state.down}rd and ${this.state.distance}`}
+                {this.state.down === 4 && `${this.state.down}th and ${this.state.distance}`}
+              </div>
+              <div className = 'ballOn'>Ball on: {this.state.ballOn >50 && `Wake ${100 -this.state.ballOn}`}
+                {this.state.ballOn < 50 && `${this.state.opponent} ${this.state.ballOn}`}
+                {this.state.ballOn === 50 && `50`}</div>
+              <div className = 'driveStarted'>Started: {this.state.startTerritory === 'own' && `Wake ${this.state.driveStart}`}
+                {this.state.startTerritory === 'opponent' && `${this.state.opponent} ${this.state.driveStart}`}
+              </div>
+            </div>
+            <div className = 'startDrive'>
+              <button className = 'button' onClick = {this.startDrive}>New Drive</button>
+              <button className = 'button' onClick = {this.endDrive}>End Drive</button>
+            </div>
+            <div className = 'gameButtons'>
+              <button onClick = {this.changeScore}>Change Score</button>
+              <button onClick = {this.changeInfo}>Change Info</button>
+              <button onClick = {this.changePlayer}>Change Players</button>
+            </div>
+            <div className = 'finishGame'>
+              <button onClick = {this.getResults}>Results</button>
+            </div>
+            <div className = 'activePlayers'>
+              <p>QB: {this.state.qb.name}</p>
+              <p>HB: {this.state.hb.name}</p>
             </div>
           </div>
-          <div className = 'startDrive'>
-            <button className = 'button' onClick = {this.startDrive}>New Drive</button>
-            <button className = 'button' onClick = {this.endDrive}>End Drive</button>
-          </div>
-          <div className = 'gameButtons'>
-            <button onClick = {this.changeScore}>Change Score</button>
-            <button onClick = {this.changeInfo}>Change Info</button>
-            <button onClick = {this.changePlayer}>Change Players</button>
-          </div>
-          <div className = 'finishGame'>
-            <button onClick = {this.getResults}>Results</button>
-          </div>
-          <div className = 'activePlayers'>
-            <p>QB: {this.state.qb.name}</p>
-            <p>HB: {this.state.hb.name}</p>
+          <div className = 'addPlays'>
+            <div className = 'runOrPass'><AddPlay style = {this.stylePlayType} onClick = {this.playType}/></div>
+            <div className = 'playInfo'><PlayInfo qb = {this.state.qb} hb = {this.state.hb} wr = {this.state.wrArray}
+              playType = {this.state.playType} stylePlayer = {this.stylePlayer} onClick = {this.choosePlayer} />
+            </div>
+            <div className = 'results'><PlayResult playType = {this.state.playType} TD = {this.state.touchdown}
+              checkTD = {this.checkTD} fumble = {this.state.fumble} checkFumble = {this.checkFumble}
+              complete = {this.state.completePass} changeRadio = {this.checkCompletion} showResults = {this.state.showResults}
+              int = {this.state.interception} checkInt = {this.checkInt} drop = {this.state.drop} checkDrop = {this.checkDrop}
+              changeInput = {this.onYardsGainedChange} yardsGained = {this.state.yardsGained} yac = {this.state.yardsAfterCatch}
+              changeYAC = {this.onYACChange} addPlay = {this.addPlay}/>
+            </div>
           </div>
         </div>
-        <div className = "playbyplay"><PlayByPlay playArray = {this.state.playArray} opponent = {this.state.opponent} /></div>
-        <div className = 'addPlays'>
-          <div className = 'runOrPass'><AddPlay style = {this.stylePlayType} onClick = {this.playType}/></div>
-          <div className = 'playInfo'><PlayInfo qb = {this.state.qb} hb = {this.state.hb} wr = {this.state.wrArray}
-            playType = {this.state.playType} stylePlayer = {this.stylePlayer} onClick = {this.choosePlayer} />
+        <div className = 'rightSide'>
+          <div className = "playbyplay">
+            <PlayByPlay playArray = {this.state.playArray} opponent = {this.state.opponent} />
           </div>
-          <div className = 'results'><PlayResult playType = {this.state.playType} TD = {this.state.touchdown}
-            checkTD = {this.checkTD} fumble = {this.state.fumble} checkFumble = {this.checkFumble}
-            complete = {this.state.completePass} changeRadio = {this.checkCompletion} showResults = {this.state.showResults}
-            int = {this.state.interception} checkInt = {this.checkInt} drop = {this.state.drop} checkDrop = {this.checkDrop}
-            changeInput = {this.onYardsGainedChange} yardsGained = {this.state.yardsGained} yac = {this.state.yardsAfterCatch}
-            changeYAC = {this.onYACChange} addPlay = {this.addPlay}/>
+          <div className = 'playerStats'>
+            <PlayerStats players = {this.state.arrayOfAllPlayers}/>
           </div>
-          <div className = 'playerStats'><PlayerStats players = {this.state.arrayOfAllPlayers}/></div>
         </div>
         {changePlayer && <ChangePlayer qb = {this.state.qb} hb={this.state.hb} qbArray = {this.state.qbArray}
           hbArray = {this.state.hbArray} changeQB = {this.changeQB} changeHB = {this.changeHB}

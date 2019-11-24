@@ -6,13 +6,19 @@ body{
 
 }
 .app{
-  position: relative;
   min-width: 1200px;
+  display: flex;
+  flex-flow: row wrap;
+}
+.leftSide{
+  width:50%;
+}
+.rightSide{
+  width:50%;
 }
 
 .liveInfo{
   height: 50vh;
-  width: 50%;
   border-top: 2px solid white;
   border-right: 1px solid white;
   border-left: 2px solid white;
@@ -24,11 +30,12 @@ body{
 .score{
   font-size: 20px;
   text-align: center;
+  padding: 0px;
 }
 
 .wakeScore, .oppScore{
   display: inline-block;
-  padding: 10px;
+  padding: 5px 5px 0px 5px;
 }
 
 .wakeScore p, .oppScore p{
@@ -107,7 +114,6 @@ width: 200px;
   color: white;
   font-size: 20px;
   height: 50vh;
-  width:50%;
   border-bottom: 2px solid white;
   border-top: 1px solid white;
   border-left:2px solid white;
@@ -183,14 +189,10 @@ width: 200px;
 
 .playbyplay{
   height: 50vh;
-  position: absolute;
-  top: 0px;
-  left: 50vw;
   border-top: 2px solid white;
   border-left: 1px solid white;
   border-right: 2px solid white;
   border-bottom: 1px solid white;
-  width: 50%;
   box-sizing: border-box;
   color: white;
 }
@@ -218,14 +220,10 @@ width: 200px;
 }
 .playerStats{
   height: 50vh;
-  position: absolute;
-  top: 50vh;
-  left: 50vw;
   border-top: 1px solid white;
   border-left: 1px solid white;
   border-right: 2px solid white;
   border-bottom: 2px solid white;
-  width: 50%;
   box-sizing: border-box;
   color: white;
   font-size: 12px;
