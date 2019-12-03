@@ -18,10 +18,11 @@ const PlayResults = (props) => (
         {props.playType.includes('pass') &&
           <div style = {{fontSize: '16px', textAlign: 'center'}}>
           <div>
+            <p><input name = 'pass' id = 'incomplete' type = 'radio' onChange={props.changeRadio} checked = {!props.complete}></input>
+            <label>Incomplete</label></p>
             <p><input name = 'pass' id = 'complete' type = 'radio' onChange={props.changeRadio} checked = {props.complete}></input>
-            <label style = {{paddingRight: '20px'}}>Complete</label>
-            <input name = 'pass' id = 'incomplete' type = 'radio' onChange={props.changeRadio} checked = {!props.complete}></input>
-            <label>Incomplete</label></p></div>
+            <label>Complete</label></p>
+            </div>
             {props.complete &&
               <div>
                 <p><label>Yards: </label><input size = '1' type = 'text' value = {props.yardsGained} onChange = {props.changeInput}></input></p>
