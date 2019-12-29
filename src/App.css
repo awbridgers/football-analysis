@@ -11,10 +11,10 @@ body{
   flex-flow: row wrap;
 }
 .leftSide{
-  width:50%;
+  width:60%;
 }
 .rightSide{
-  width:50%;
+  width:40%;
 }
 
 .liveInfo{
