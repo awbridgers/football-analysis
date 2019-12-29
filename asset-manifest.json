@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/football-analysis/static/css/main.2a40c941.chunk.css",
+    "main.css": "/football-analysis/static/css/main.d87e3898.chunk.css",
     "main.js": "/football-analysis/static/js/main.83269f84.chunk.js",
     "main.js.map": "/football-analysis/static/js/main.83269f84.chunk.js.map",
     "runtime-main.js": "/football-analysis/static/js/runtime-main.821890ed.js",
@@ -8,14 +8,14 @@
     "static/js/2.217ba974.chunk.js": "/football-analysis/static/js/2.217ba974.chunk.js",
     "static/js/2.217ba974.chunk.js.map": "/football-analysis/static/js/2.217ba974.chunk.js.map",
     "index.html": "/football-analysis/index.html",
-    "precache-manifest.eb98833c58ab88be78c67c9919a49592.js": "/football-analysis/precache-manifest.eb98833c58ab88be78c67c9919a49592.js",
+    "precache-manifest.a8ff75c26525c4a20d99691df612ebe5.js": "/football-analysis/precache-manifest.a8ff75c26525c4a20d99691df612ebe5.js",
     "service-worker.js": "/football-analysis/service-worker.js",
-    "static/css/main.2a40c941.chunk.css.map": "/football-analysis/static/css/main.2a40c941.chunk.css.map"
+    "static/css/main.d87e3898.chunk.css.map": "/football-analysis/static/css/main.d87e3898.chunk.css.map"
   },
   "entrypoints": [
     "static/js/runtime-main.821890ed.js",
     "static/js/2.217ba974.chunk.js",
-    "static/css/main.2a40c941.chunk.css",
+    "static/css/main.d87e3898.chunk.css",
     "static/js/main.83269f84.chunk.js"
   ]
 }
